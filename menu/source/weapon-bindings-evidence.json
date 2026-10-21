@@ -1,0 +1,30 @@
+{
+  "Player.get_Attributes": {
+    "declaration": "public PlayerAttributes get_Attributes() { }",
+    "rva": "// RVA: 0x560E488 Offset: 0x560E488 VA: 0x560E488"
+  },
+  "PlayerAttributes.BDOEGBMMEOK": {
+    "declaration": "private Player BDOEGBMMEOK; // 0x20",
+    "rva": null
+  },
+  "PlayerAttributes.ShootNoReload": {
+    "declaration": "public bool ShootNoReload; // 0x111",
+    "rva": null
+  },
+  "PlayerAttributes.get_IsAmmoFree": {
+    "declaration": "public bool get_IsAmmoFree() { }",
+    "rva": "// RVA: 0x6483C7C Offset: 0x6483C7C VA: 0x6483C7C"
+  },
+  "PlayerAttributes.set_IsAmmoFree": {
+    "declaration": "public void set_IsAmmoFree(bool BOKHFCBMCAB) { }",
+    "rva": "// RVA: 0x6483C84 Offset: 0x6483C84 VA: 0x6483C84"
+  },
+  "PlayerAttributes.get_FireIntervalScale": {
+    "declaration": "public float get_FireIntervalScale() { }",
+    "rva": "// RVA: 0x64877D8 Offset: 0x64877D8 VA: 0x64877D8"
+  },
+  "PlayerAttributes.set_FireIntervalScale": {
+    "declaration": "public void set_FireIntervalScale(float BOKHFCBMCAB) { }",
+    "rva": "// RVA: 0x6487830 Offset: 0x6487830 VA: 0x6487830"
+  }
+}

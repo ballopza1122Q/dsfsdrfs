@@ -1,0 +1,28 @@
+const fs=require('node:fs'),path=require('node:path'),cp=require('node:child_process');
+const dir=__dirname,out=path.join(dir,'build'),csc=path.join(process.env.WINDIR||'C:/Windows','Microsoft.NET/Framework64/v4.0.30319/csc.exe');
+function run(exe,args){const r=cp.spawnSync(exe,args,{cwd:out,encoding:'utf8'});if(r.stdout)process.stdout.write(r.stdout);if(r.stderr)process.stderr.write(r.stderr);if(r.status!==0)throw Error('Test failed '+path.basename(exe));}
+run(process.execPath,[path.join(dir,'layout.test.cjs')]);
+const core=path.join(dir,'../runtime-test');
+run(csc,['/nologo','/codepage:65001','/unsafe','/optimize+','/nowarn:0169','/target:exe','/out:'+path.join(out,'MizzeRuntimeTest.exe'),'/reference:System.Web.Extensions.dll','/reference:System.Drawing.dll','/reference:System.Numerics.dll',...fs.readdirSync(core).filter(n=>n.endsWith('.cs')).map(n=>path.join(core,n)),path.join(dir,'RuntimeApis.cs'),path.join(dir,'RuntimeRenderApis.cs'),path.join(dir,'OfflineWrappers.cs'),path.join(dir,'RuntimeTest.cs'),path.join(dir,'NativeR6Checks.cs'),path.join(dir,'NativeVisibleCountChecks.cs'),path.join(dir,'NativeAimkillChecks.cs'),path.join(dir,'NativeR7Checks.cs'),path.join(dir,'NativeR8Checks.cs'),path.join(dir,'NativeR9Checks.cs'),path.join(dir,'NativeR10Checks.cs'),path.join(dir,'NativeR11Checks.cs'),path.join(dir,'NativeR12Checks.cs'),path.join(dir,'NativeR13Checks.cs'),path.join(dir,'NativeR132Checks.cs'),path.join(dir,'NativeR14Checks.cs'),path.join(dir,'NativeR141Checks.cs'),path.join(dir,'NativeR142Checks.cs'),path.join(dir,'NativeR143Checks.cs'),path.join(dir,'NativeR144Checks.cs'),path.join(dir,'NativeR145Checks.cs'),path.join(dir,'NativeR148Checks.cs'),path.join(dir,'OfflineLicenseCrypto.cs'),path.join(dir,'NativeR149SignatureChecks.cs')]);
+run(path.join(out,'MizzeRuntimeTest.exe'),[path.join(dir,'dist/Assembly-CSharp-patch.bytes'),path.join(dir,'dist/methods.tsv'),'--input-unavailable']);
+run(path.join(out,'MizzeRuntimeTest.exe'),[path.join(dir,'dist/Assembly-CSharp-patch.bytes'),path.join(dir,'dist/methods.tsv'),'--r147-only']);
+run(path.join(out,'MizzeRuntimeTest.exe'),[path.join(dir,'dist/Assembly-CSharp-patch.bytes'),path.join(dir,'dist/methods.tsv'),'--r148-only']);
+run(path.join(out,'MizzeRuntimeTest.exe'),[path.join(dir,'dist/Assembly-CSharp-patch.bytes'),path.join(dir,'dist/methods.tsv'),'--r149-signature-only']);
+run(path.join(out,'MizzeRuntimeTest.exe'),[path.join(dir,'dist/Assembly-CSharp-patch.bytes'),path.join(dir,'dist/methods.tsv'),'--weapon-gate-only']);
+run(path.join(out,'MizzeRuntimeTest.exe'),[path.join(dir,'dist/Assembly-CSharp-patch.bytes'),path.join(dir,'dist/methods.tsv'),'--r11-only']);
+run(path.join(out,'MizzeRuntimeTest.exe'),[path.join(dir,'dist/Assembly-CSharp-patch.bytes'),path.join(dir,'dist/methods.tsv'),'--r13-only']);
+run(path.join(out,'MizzeRuntimeTest.exe'),[path.join(dir,'dist/Assembly-CSharp-patch.bytes'),path.join(dir,'dist/methods.tsv'),'--r132-only']);
+run(path.join(out,'MizzeRuntimeTest.exe'),[path.join(dir,'dist/Assembly-CSharp-patch.bytes'),path.join(dir,'dist/methods.tsv'),'--native-only']);
+run(path.join(out,'MizzeRuntimeTest.exe'),[path.join(dir,'dist/Assembly-CSharp-patch.bytes'),path.join(dir,'dist/methods.tsv'),'--r14-only']);
+run(path.join(out,'MizzeRuntimeTest.exe'),[path.join(dir,'dist/Assembly-CSharp-patch.bytes'),path.join(dir,'dist/methods.tsv'),'--r141-only']);
+run(path.join(out,'MizzeRuntimeTest.exe'),[path.join(dir,'dist/Assembly-CSharp-patch.bytes'),path.join(dir,'dist/methods.tsv'),'--r142-only']);
+run(path.join(out,'MizzeRuntimeTest.exe'),[path.join(dir,'dist/Assembly-CSharp-patch.bytes'),path.join(dir,'dist/methods.tsv'),'--r143-only']);
+run(path.join(out,'MizzeRuntimeTest.exe'),[path.join(dir,'dist/Assembly-CSharp-patch.bytes'),path.join(dir,'dist/methods.tsv'),'--r144-only']);
+run(path.join(out,'MizzeRuntimeTest.exe'),[path.join(dir,'dist/Assembly-CSharp-patch.bytes'),path.join(dir,'dist/methods.tsv'),'--r145-only']);
+const configOnly=process.argv.includes('--config-only'),quick=process.argv.includes('--quick'),featuresOnly=process.argv.includes('--features-only');
+run(path.join(out,'MizzeRuntimeTest.exe'),[path.join(dir,'dist/Assembly-CSharp-patch.bytes'),path.join(dir,'dist/methods.tsv'),...(configOnly?['--config-only']:quick?['--quick']:featuresOnly?['--features-only']:[])]);
+if(!configOnly&&!quick&&!featuresOnly)run(path.join(out,'MizzeRuntimeTest.exe'),[path.join(dir,'dist/Assembly-CSharp-patch.bytes'),path.join(dir,'dist/methods.tsv'),path.join(dir,'dist/esp-profile.json')]);
+if(!configOnly&&!quick&&!featuresOnly)run(path.join(out,'MizzeRuntimeTest.exe'),[path.join(dir,'dist/Assembly-CSharp-patch.bytes'),path.join(dir,'dist/methods.tsv'),'--autofire-soak']);
+const {inspect}=require('../inspect_patch.cjs');const p=inspect(fs.readFileSync(path.join(dir,'dist/Assembly-CSharp-patch.bytes')));const evidence=JSON.parse(fs.readFileSync(path.join(dir,'bindings-evidence.json')));
+for(const e of p.externMethods)if(!evidence.some(v=>v.method===e.name&&v.owner===e.owner.split(',')[0].replace(/\+/g,'.')&&JSON.stringify(v.parameters)===JSON.stringify(e.parameters)))throw Error('New unverified extern '+e.owner+'.'+e.name);
+console.log('PASS: all generated extern descriptors are covered by checked TH iOS declarations.');

@@ -1,0 +1,29 @@
+name: Build Mizze bytes
+on:
+  push:
+    branches: [main]
+    paths: ['menu/**', '.github/workflows/build-bytes.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: windows-2022
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Compile CSharp to IFix
+        run: node menu/source/build.cjs menu/toolchain
+      - name: Package bytes
+        run: node menu/source/package.cjs
+      - name: Upload bytes
+        uses: actions/upload-artifact@v4
+        with:
+          name: Mizze-bytes
+          if-no-files-found: error
+          path: |
+            menu/source/dist/Assembly-CSharp-patch.bytes
+            menu/source/dist/SHA256SUMS.txt
