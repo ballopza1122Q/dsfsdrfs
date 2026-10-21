@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -9,10 +9,10 @@ unsafe static partial class MizzeRuntimeTest
     {
         int before=Checks;Player local,target;R11Setup(out local,out target);
         var previous=Get<UnityWebRequest>("MzRequest");if(previous!=null)previous.Dispose();Set("MzRequest",null);Set("MzKeyHash",new string('a',64));
-        string origin="https://144.79.172.172",url=origin+"/v9/lease";
+        string origin="https://27.130.147.114",url=origin+"/v9/lease";
         Check(new Uri((string)Run("MzLicenseApi")).GetLeftPart(UriPartial.Authority)==origin&&(string)Run("MzLicenseApi")==url,"exact configured VPS HTTPS endpoint");
         Check((bool)Run("MzValidLicenseUrl",url),"only configured signed endpoint is allowed");
-        foreach(string hostile in new[]{url.Replace(origin,"https://other-key.invalid"),url.Replace("https:","http:"),url+"?redirect=1",url+"#fragment",url+"/extra",origin+"/licensesV9.json",url.Replace("144.79.172.172","144.79.172.172.attacker.invalid")})
+        foreach(string hostile in new[]{url.Replace(origin,"https://other-key.invalid"),url.Replace("https:","http:"),url+"?redirect=1",url+"#fragment",url+"/extra",origin+"/licensesV9.json",url.Replace("27.130.147.114","27.130.147.114.attacker.invalid")})
             Check(!(bool)Run("MzValidLicenseUrl",hostile),"strict origin/path guard rejects "+hostile);
         int sent=UnityWebRequest.Requests.Count;var bad=UnityWebRequest.Get("https://other-key.invalid/key");Run("MzStartRequest",bad,1);
         Check(bad.Disposed&&UnityWebRequest.Requests.Count==sent&&Get<UnityWebRequest>("MzRequest")==null&&Get<float>("MzLeaseDeadline")==0,"off-origin request is disposed before transmission and invalidates lease");

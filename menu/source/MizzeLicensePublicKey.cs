@@ -1,5 +1,5 @@
 namespace COW.GamePlay { public partial class SceneEditBoxSelectTool {
 public static string MzLicenseModulus(){return "xkGBs121lwrFSlN653mMbRGdssQleMOsFYQZDsS6/kYemKiyHJv3bF1Glkyg/9okdk3tzCFg02Q8R0XoWGMTxiDEk2LmNboMMeT+p6MAuztpznMydHxeml63naOJ5SRvqnqqESMQ0aRa7fqWEaoriVJYN302pxWpsuIoQuk+47AZ/HLtunCAMHBWlQIUkapOUijrR1G5So4lOLN+prlRuEw7NOgAn3TZBsHvPLsi86D2Y0VxabtID6JoccDRRD9oTgKzQq0JxeClZzXoV1cDK0D3EuuwZFTU0EU9g72vQcFF/5//L5OUPcUribo416g9DRS2F59KQQFL2PTET6NpyGeZe5TuGlq6XBJvjmyPSOo04766fiuoQtrDDLuupRtA0URk9ZaDBoSaaI5lU7yjl55e0tAkCcjBtFKls/mG0NnXQVpgw+K1fVKoNs6qcVVF+apYYoSAhxrkzaTSc1cbm1kKN9ktXf60LrKBwP29tk+08+vgkQBxifrZaEqBCEGp";}
 public static string MzLicenseKeyId(){return "a65a25db3a11bdc3f764fd2cf31d25e7ad9ad94e579b97ca0b059836b852ee75";}
-public static string MzLicenseApi(){return "https://144.79.172.172/v9/lease";}
+public static string MzLicenseApi(){return "https://27.130.147.114/v9/lease";}
 }}

@@ -64,7 +64,7 @@ unsafe static partial class MizzeRuntimeTest
         PendingSignature();SubmitSigned(SignedEnvelope(SignaturePayload(),args[0]),200,31);Check(!(bool)Run("MzAuthorized"),"delayed response cannot renew a stale challenge");
         foreach(int status in new[]{403,429,503}){PendingSignature();SubmitSigned(SignedEnvelope(SignaturePayload(),args[0]),status);Check(!(bool)Run("MzAuthorized"),"HTTP error cannot activate even with a signed response body: "+status);}
         PendingSignature();Run("MzBeginRead");var outgoing=Get<UnityWebRequest>("MzRequest");
-        Check(outgoing!=null&&outgoing.Method=="POST"&&outgoing.Headers["Content-Type"]=="application/json"&&outgoing.Url=="https://144.79.172.172/v9/lease","native client uses pinned VPS HTTPS JSON POST endpoint");
+        Check(outgoing!=null&&outgoing.Method=="POST"&&outgoing.Headers["Content-Type"]=="application/json"&&outgoing.Url=="https://27.130.147.114/v9/lease","native client uses pinned VPS HTTPS JSON POST endpoint");
         var requestBody=new JavaScriptSerializer().Deserialize<Dictionary<string,object>>(outgoing.Body);Check(requestBody.Count==4&&((string)requestBody["nonce"]).Length==32,"outgoing proof request contains current hash/device/claim and fresh nonce only");
         outgoing.Dispose();Set("MzRequest",null);
         PendingSignature();SubmitSigned(SignedEnvelope(SignaturePayload(),args[0]));

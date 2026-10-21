@@ -24,7 +24,7 @@ namespace COW.GamePlay
         }
         public static bool MzHex(string s){if(s==null||s.Length!=64)return false;for(int i=0;i<s.Length;i++){char c=s[i];if(!(c>='0'&&c<='9')&&!(c>='a'&&c<='f'))return false;}return true;}
         public static bool MzAuthorized(){return MzLeaseDeadline>0&&Time.realtimeSinceStartup<MzLeaseDeadline;}
-        public static string MzLicenseOrigin(){return "https://144.79.172.172";}
+        public static string MzLicenseOrigin(){return "https://27.130.147.114";}
         public static string MzKeyUrl(){return MzLicenseApi();}
         public static bool MzValidLicenseUrl(string url){return url==MzLicenseApi();}
         public static void MzStartRequest(UnityWebRequest request,int stage)

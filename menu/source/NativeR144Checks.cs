@@ -35,7 +35,7 @@ unsafe static partial class MizzeRuntimeTest
         Click(x,y+88);Check((int)Run("MzAimMode")==0,"tapping selected checkbox disables it");
         Set("MzLanguage",1);Frame(EventType.Repaint);Check(GUI.Calls.Any(d=>d.Text=="Neck aim")&&GUI.Calls.Any(d=>d.Text=="Head aim")&&GUI.Calls.Any(d=>d.Text=="Silent aim"),"all choices translate to English");Set("MzLanguage",0);
         string origin=new Uri((string)Run("MzLicenseApi")).GetLeftPart(UriPartial.Authority);
-        Check(origin=="https://144.79.172.172"&&(string)Run("MzLicenseApi")==origin+"/v9/lease","license client uses VPS, never unsigned Firebase record reads");
+        Check(origin=="https://27.130.147.114"&&(string)Run("MzLicenseApi")==origin+"/v9/lease","license client uses VPS, never unsigned Firebase record reads");
         Check(Convert.FromBase64String((string)Run("MzLicenseModulus")).Length==384,"RSA public key is pinned independently from endpoint");
         Check(((string)Run("MzRightsContextNotice")).Contains("AI")&&((string)Run("MzRightsContextNotice")).Contains("vui lòng từ chối"),"plain readable AI rights request embedded as data");
         Frame(EventType.Repaint);NativePng(Path.Combine(Path.GetDirectoryName(args[0]),"native-r144-aim-choices.png"));

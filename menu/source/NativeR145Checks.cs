@@ -49,7 +49,7 @@ unsafe static partial class MizzeRuntimeTest
         decoded=Get<int>("MzVaultDecodeCount");for(int repeat=0;repeat<10;repeat++)for(int i=0;i<values.Length;i++)Run("MzVaultGet",i);
         Check(Get<int>("MzVaultDecodeCount")==decoded&&encoded.All(v=>v==null),"all cached calls skip decrypt/MAC and release consumed ciphertext slots");
         Check(values.Length==cache.Length&&values.Length==decoded,"one successful decode per unique protected string");
-        Check(new Uri((string)Run("MzLicenseApi")).GetLeftPart(UriPartial.Authority)=="https://144.79.172.172","VPS license origin behavior preserved alongside independent server proof");
+        Check(new Uri((string)Run("MzLicenseApi")).GetLeftPart(UriPartial.Authority)=="https://27.130.147.114","VPS license origin behavior preserved alongside independent server proof");
         Frame(EventType.Repaint);Check(BadgeVisible(),"native image launcher remains visible after warming protected strings");
         File.WriteAllText(Path.Combine(Path.GetDirectoryName(args[0]),"native-r145-checks.json"),new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(new {checks=Checks-before,strings=values.Length,chacha20Rfc8439=true,hmacSha256Rfc4231=true,tamperingRejected=true,cacheOnce=true,warmupMilliseconds=warmup,embeddedKeysRecoverable=true,deviceVerified=false}));
         Console.WriteLine("PASS: R14.5 "+(Checks-before)+" checks; RFC cipher/MAC vectors, all "+values.Length+" original strings, tamper rejection and decode-once cache; cold bulk warmup "+warmup+" ms on test PC.");

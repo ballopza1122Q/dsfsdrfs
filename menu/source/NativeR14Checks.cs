@@ -22,7 +22,7 @@ unsafe static partial class MizzeRuntimeTest
         for(int i=0;i<seedCount;i++)Check(Run("MzVaultGet",i) is string,"protected UTF-8 string decodes in actual IFix VM "+i);
         int warmed=Get<string[]>("MzVaultEncoded").Count(s=>s!=null);for(int i=0;i<seedCount;i++)Run("MzVaultGet",i);
         Check(warmed==0&&System.Object.ReferenceEquals(cache,Get<string[]>("MzVaultCache")),"all decoded strings retain a fixed cache and release encoded slots");
-        Check(((string)Run("MzLicenseApi")).StartsWith("https://")&&((string)Run("MzLicenseApi"))=="https://144.79.172.172/v9/lease","pinned signed license endpoint still decodes correctly");
+        Check(((string)Run("MzLicenseApi")).StartsWith("https://")&&((string)Run("MzLicenseApi"))=="https://27.130.147.114/v9/lease","pinned signed license endpoint still decodes correctly");
         Set("MzLanguage",0);Run("MzLanguageInit");Check(Get<int>("MzLanguage")==1&&!Get<bool>("MzChooseLanguage"),"saved English reloads without another prompt");
         Click(Get<float>("MzPanelX")+184,Get<float>("MzPanelY")+49);Check(Get<bool>("MzChooseLanguage"),"header language control reopens chooser");
         Click(Get<float>("MzPanelX")+190,Get<float>("MzPanelY")+247);
